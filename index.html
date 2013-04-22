@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <title>Khronos Tester</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+        <script language="JavaScript" 
+            src="./src/kineticjs.js"></script>    
+        
+        <script language="JavaScript" 
+            src="./src/KhronosJs/Khronos.js"></script>    
+        
+        <script language="JavaScript" 
+            src="./src/KhronosJs/timegraph.js"></script>    
+            
+    </head>
+    
+    <body>
+        <div id="timeline" ></div>
+        
+        <script>
+            
+            var a=new KhronosJs.timegraph({
+                container: 'timeline',
+                width: 578,
+                height: 200
+            });
+            console.log(a);
+        </script>
+        
+    </body>
+
+</html>
