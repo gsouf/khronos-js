@@ -12,7 +12,18 @@
             src="./src/KhronosJs/Khronos.js"></script>    
         
         <script language="JavaScript" 
-            src="./src/KhronosJs/timegraph.js"></script>    
+            src="./src/KhronosJs/config.js"></script>  
+            
+        <script language="JavaScript" 
+            src="./src/KhronosJs/timegraph.js"></script> 
+            
+        <script language="JavaScript" 
+            src="./src/KhronosJs/point.js"></script> 
+            
+        <script language="JavaScript" 
+            src="./src/KhronosJs/timeline.js"></script> 
+            
+          
             
     </head>
     
@@ -21,12 +32,35 @@
         
         <script>
             
-            var a=new KhronosJs.timegraph({
+            var conf=new KhronosJs.config({
+                unit: "1d",
+                min: new Date(2013,04,20),
+                max: new Date(2012,04,23),
+                ppu: 10
+            });
+            
+            var graph=new KhronosJs.timegraph({
                 container: 'timeline',
                 width: 578,
-                height: 200
+                height: 200,
+                config: conf
             });
-            console.log(a);
+            
+            
+            var t=new KhronosJs.timeline({
+                
+                color: "#FF0000"
+                
+            });
+            
+            t.addPoint(new Date(2013,04,21),2);
+            t.addPoint(new Date(2013,04,20),1);
+            t.addPoint(new Date(2013,04,22),10);
+            t.addPoint(new Date(2013,04,23),2);
+
+            graph.addTimeline(t);
+            
+               
         </script>
         
     </body>

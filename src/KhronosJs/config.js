@@ -44,8 +44,32 @@ KhronosJs.config.prototype={
                 break;
         }
         
-        this._unitvalue = this.unit.slice(0,-1);        
+        this._unitvalue = this.unit.slice(0,-1);
+        
+        
     },
+            
+    diffX: function(date){
+
+        switch(this._unittype){
+            case "s":
+            case "i":
+            case "h":
+            case "d":
+                var diff = date.getTime()-this.min.getTime();
+                diff = diff/(1000*60*60*24);
+                return diff*this.ppu;
+                break;
+            case "w":
+            case "m":
+            case "y":
+                break;
+            
+            default:
+                console.log("unknow type : '"+unitchar+"' for unit. d (day) used instead","color: #FF0000");
+        }
+
+    }
             
     
     

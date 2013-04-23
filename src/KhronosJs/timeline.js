@@ -7,10 +7,14 @@
  */
 KhronosJs.timeline = function( params ){
     
+    this.layer = new Kinetic.Layer();
+    
     this.color = params.color;
     this.hoverColor = params.hoverColor;
     
     this.points = new Array();
+    
+
     
 };
 
@@ -33,12 +37,61 @@ KhronosJs.timeline.prototype={
         if(mixed instanceof KhronosJs.point)
             this.points.push(mixed);
         else
-            this.points.push(new KhronosJs.point(mixed,value));
+            this.points.push(new KhronosJs.point({
+                date  : mixed,
+                value : value
+            }));
         
     },
     
-    draw: function(graph,origineDate){
-        this.points.sort(KhronosJs.handler.sortDateAsc());
+    draw: function(config){
+        this.points.sort(KhronosJs.handler.sortDateAsc);
+        
+        var lastRect=null;
+        
+        for(var k in this.points){
+            
+            var point=this.points[k];
+            
+            var xCoor=config.diffX(point.date);
+            
+            var rect = new Kinetic.Rect({
+                x: xCoor,
+                y: point.value,
+                width: 5,
+                height: 5,
+                fill: this.color,
+                strokeWidth: 0
+            });
+            
+            
+            
+            if(lastRect !== null){
+                
+                
+                var line = new Kinetic.Line({
+                    points: [lastRect.getX()+lastRect.getWidth()/2, lastRect.getY()+lastRect.getHeight()/2, rect.getX()+lastRect.getWidth()/2, rect.getY()+lastRect.getHeight()/2],
+                    stroke: 'red',
+                    strokeWidth: 2,
+                    lineCap: 'round',
+                    lineJoin: 'round'
+                });
+                
+                
+                
+                this.layer.add(line);
+                
+            }
+            
+            lastRect=rect;
+            
+            this.layer.add(rect);
+            
+            rect.on('mousedown', function() {
+                    console.log("kk");
+                });
+        }
+        
     }
             
 };
