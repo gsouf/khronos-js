@@ -40,6 +40,8 @@ KhronosJs.timegraph.prototype = {
         }
         
         this.draw();
+        this.timelineLayer.draw();
+ 
     }
     
 }

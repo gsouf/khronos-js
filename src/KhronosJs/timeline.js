@@ -64,20 +64,25 @@ KhronosJs.timeline.prototype={
                 strokeWidth: 0
             });
             
+            rect.on("mouemove",function(){
+               alert('ll'); 
+            });
             
             
             if(lastRect !== null){
                 
                 
                 var line = new Kinetic.Line({
-                    points: [lastRect.getX()+lastRect.getWidth()/2, lastRect.getY()+lastRect.getHeight()/2, rect.getX()+lastRect.getWidth()/2, rect.getY()+lastRect.getHeight()/2],
+                    points: [lastRect.getX()+lastRect.getWidth()/2, lastRect.getY()+lastRect.getHeight()/2, rect.getX()+rect.getWidth()/2, rect.getY()+rect.getHeight()/2],
                     stroke: 'red',
                     strokeWidth: 2,
                     lineCap: 'round',
                     lineJoin: 'round'
                 });
                 
-                
+                line.on('mouseout', function() {
+                    alert('ll');
+                });
                 
                 this.layer.add(line);
                 
@@ -85,11 +90,13 @@ KhronosJs.timeline.prototype={
             
             lastRect=rect;
             
+            
+            
             this.layer.add(rect);
             
-            rect.on('mousedown', function() {
-                    console.log("kk");
-                });
+            
+            
+
         }
         
     }
