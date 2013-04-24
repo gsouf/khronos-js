@@ -13,7 +13,10 @@ KhronosJs.config = function( params ){
     this.unit = params.unit;
     this.min  = params.min;
     this.max  = params.max;
-    this.ppu  = params.ppu;
+    this.minY = params.minY;
+    this.maxY = params.maxY;
+    this.ppuX  = params.ppuX;
+    this.ppuY  = params.ppuY;
     
     this._unittype;    //set by parse unit
     this._unitvalue;   //set by parse unit
@@ -39,7 +42,7 @@ KhronosJs.config.prototype={
                 break;
             
             default:
-                console.log("unknow type : '"+unitchar+"' for unit. d (day) used instead","color: #FF0000");
+                console.log("unknow type : '"+unitchar+"' for unit. 'd' (day) used instead");
                 this._unittype = "d";
                 break;
         }
@@ -49,30 +52,48 @@ KhronosJs.config.prototype={
         
     },
             
-    diffX: function(date){
-
+    diffX: function(date,multiplyByPpu){
+        if(multiplyByPpu === undefined){
+            multiplyByPpu=true;
+        }
+        
+        
+        var scale;
+        
         switch(this._unittype){
             case "s":
+                scale = 1000;
+                break;
             case "i":
+                scale = 1000*60;
+                break;
             case "h":
+                scale = 1000*60*60;
+                break;
             case "d":
-                var diff = date.getTime()-this.min.getTime();
-                diff = diff/(1000*60*60*24);
-                return diff*this.ppu;
+                scale = 1000*60*60*24;
                 break;
             case "w":
+                scale = 7*1000*60*60*24;
+                break;
             case "m":
+                scale = 30*1000*60*60*24;
+                break;
             case "y":
+                scale = 365*1000*60*60*24;
                 break;
             
             default:
-                console.log("unknow type : '"+unitchar+"' for unit. d (day) used instead","color: #FF0000");
+                console.log("unknow type : '"+unitchar+"' for unit. d (day) used instead");
         }
+         return ((date.getTime()-this.min.getTime())/scale)*(true===multiplyByPpu?this.ppuX:1);
 
-    }
+    },
             
     
-    
+    yVal: function(number){
+      return number*this.ppuY;  
+    },
     
     
 };
