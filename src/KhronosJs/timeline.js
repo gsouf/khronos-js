@@ -35,12 +35,14 @@ KhronosJs.timeline = function( params ){
           text: this.legend,
           fontFamily: 'Arial',
           fontSize: 10,
+          fontStyle:"bold",
           padding: 2,
           fill: 'white'
         },
         rect: {
           fill: this.color,
           pointerDirection: 'right',
+
           pointerWidth: 3,
           pointerHeight: 5,
         }

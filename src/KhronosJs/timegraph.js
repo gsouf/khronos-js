@@ -7,6 +7,7 @@ KhronosJs.timegraph = function( params ){
     this.timelines = Array();
     this.config = params.config;
     this.bgColor=params.bgColor;
+    this.gridsColor=params.gridsColor;
     
     this.setHeight(this.config.yVal(this.config.maxY)+40);
     
@@ -43,7 +44,7 @@ KhronosJs.timegraph = function( params ){
      = INSTANCIATE THE LAYERS *
      =========================*/
     this.backgroundLayer = new Kinetic.Layer();
-    this.graphLayer      = new Kinetic.Layer({height:this.height,width:this.width});
+    this.graphLayer      = new Kinetic.Layer({y:3,height:this.height,width:this.width});
     
     /**************************
      = INSTANCIATE THE GROUPS *
@@ -54,7 +55,7 @@ KhronosJs.timegraph = function( params ){
         this.positionGroupe = new Kinetic.Group();
         this.graphGroupe    = new Kinetic.Group();
             this.fullGraphGroup = new Kinetic.Group();
-                    this.gridGroup  = new KhronosJs.dateGrid(this.config);
+                    this.gridGroup  = new KhronosJs.dateGrid(this.config,{gridsColor:this.gridsColor});
                     this.lineGroup  = new Kinetic.Group();
                     this.dateGroup  = new KhronosJs.datePannel(this.config);
             
@@ -86,7 +87,7 @@ KhronosJs.timegraph = function( params ){
     
     
     this.labelGroup.setHeight(this.getHeight());
-    this.labelGroup.setWidth(80);
+    this.labelGroup.setWidth(120);
     
     var bgLabel=new Kinetic.Rect({
         fill: this.bgColor,
@@ -108,7 +109,7 @@ KhronosJs.timegraph = function( params ){
      =================================*/
 
     this.positionGroupe.setHeight(this.getHeight());
-    this.positionGroupe.setWidth(80);
+    this.positionGroupe.setWidth(0);
     this.positionGroupe.setX(this.getWidth()-this.positionGroupe.getWidth());
     
 

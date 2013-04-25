@@ -29,6 +29,11 @@ KhronosJs.datePannel.prototype = {
                     this.config.moveToNext(date);
                     continue;
                 }
+            }else if(this.config.ppuX<60){
+                if(i%3!==1){
+                    this.config.moveToNext(date);
+                    continue;
+                }
             }
             
             var xVal=i*this.config.ppuX;

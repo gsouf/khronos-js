@@ -1,8 +1,12 @@
 KhronosJs.dateGrid = function(config, params ){
     
+    if(params === undefined)
+    params={};
+    
     Kinetic.Group.apply(this,[params]);
     
     this.config=config;
+    this.gridsColor=params.gridsColor!==undefined?params.gridsColor:"#DDDDDD0";
 
     this.refresh();
 };
@@ -23,7 +27,7 @@ KhronosJs.dateGrid.prototype = {
             
             var line = new Kinetic.Line({
                 points: [ xVal , minY , xVal , maxY ],
-                stroke: "#DDDDDD",
+                stroke: this.gridsColor,
                 strokeWidth: 1
             });
             
@@ -39,7 +43,7 @@ KhronosJs.dateGrid.prototype = {
             
             var line = new Kinetic.Line({
                 points: [ 0 , yVal , maxX , yVal ],
-                stroke: "#DDDDDD",
+                stroke: this.gridsColor,
                 strokeWidth: 1
             });
             
