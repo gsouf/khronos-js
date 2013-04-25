@@ -2,9 +2,15 @@ KhronosJs.timegraph = function( params ){
     
     Kinetic.Stage.apply(this,[params]);
     
+    
     // list of attached charts (each chart is drawn)
     this.timelines = Array();
     this.config = params.config;
+    this.bgColor=params.bgColor;
+    
+    this.setHeight(this.config.yVal(this.config.maxY)+40);
+    
+    var self=this;
     
     /*
     
@@ -15,8 +21,8 @@ KhronosJs.timegraph = function( params ){
      |
      |--> |Graph (Layer)
           |    
-          |--> Labels (Group)
-          |
+          |--> |Labels (Group)
+          |    |--> LabelsContainer (Group)
           |--> Positions (Group)
           |    
           |--> |TimelineGroup (Group) [Visible par of the graph]
@@ -36,19 +42,20 @@ KhronosJs.timegraph = function( params ){
     /**************************
      = INSTANCIATE THE LAYERS *
      =========================*/
-    this.backgroundLayer = new Kinetic.Layer();    
-    this.graphLayer      = new Kinetic.Layer();
+    this.backgroundLayer = new Kinetic.Layer();
+    this.graphLayer      = new Kinetic.Layer({height:this.height,width:this.width});
     
     /**************************
      = INSTANCIATE THE GROUPS *
      =========================*/
-        this.labelGroupe    = new Kinetic.Group();
+        this.labelGroup    = new Kinetic.Group();
+            this.labelsContainer = new Kinetic.Group();
         this.positionGroupe = new Kinetic.Group();
         this.graphGroupe    = new Kinetic.Group();
             this.fullGraphGroup = new Kinetic.Group();
                     this.gridGroup  = new KhronosJs.dateGrid(this.config);
                     this.lineGroup  = new Kinetic.Group();
-                    this.dateGroup  = new Kinetic.Group();
+                    this.dateGroup  = new KhronosJs.datePannel(this.config);
             
     
     
@@ -57,6 +64,7 @@ KhronosJs.timegraph = function( params ){
     /******************************
      = CREATION OF THE BACKGROUND *
      =============================*/
+    
     var bgRec=new Kinetic.Rect({
         fill: params.bgColor,
         x:0,
@@ -68,22 +76,143 @@ KhronosJs.timegraph = function( params ){
     this.backgroundLayer.add(bgRec);
     this.add(this.backgroundLayer);
     
+
+
     
-    /********************************
-     = CREATION OF THE LABEL GROUPE *
-     ===============================*/
+    /*******************************
+     = CREATION OF THE LABEL GROUP *
+     ==============================*/
     
-    this.labelGroupe.setHeight(this.graphLayer.height);
-    this.labelGroupe.setWidth(80);
     
-    var testRec=new Kinetic.Rect({
-        fill: "FF0000",
+    this.labelGroup.setHeight(this.getHeight());
+    this.labelGroup.setWidth(80);
+    
+    var bgLabel=new Kinetic.Rect({
+        fill: this.bgColor,
         x:0,
         y:0,
-        height: this.labelGroupe.getHeight(),
-        width: this.labelGroupe.getWidth()
+        height: this.labelGroup.getHeight(),
+        width: this.labelGroup.getWidth()
     });
-    this.labelGroupe.add(testRec);
+    
+    
+    
+    this.labelGroup.add(bgLabel);
+    
+    
+    
+    
+    /**********************************
+     = CREATION OF THE POSITION GROUP *
+     =================================*/
+
+    this.positionGroupe.setHeight(this.getHeight());
+    this.positionGroupe.setWidth(80);
+    this.positionGroupe.setX(this.getWidth()-this.positionGroupe.getWidth());
+    
+
+    
+    var bgPosition=new Kinetic.Rect({
+        fill: this.bgColor,
+        x:0,
+        y:0,
+        height: this.positionGroupe.getHeight(),
+        width: this.positionGroupe.getWidth()
+    });
+    this.positionGroupe.add(bgPosition);
+    
+       
+       
+       
+       
+    /*******************************
+     = CREATION OF THE GRAPH GROUP *
+     ==============================*/
+
+    this.graphGroupe.setHeight(this.getHeight());
+    this.graphGroupe.setWidth(this.getWidth()-this.positionGroupe.getWidth()-this.labelGroup.getWidth());
+    this.graphGroupe.setX(this.labelGroup.getWidth());
+    
+
+    
+    // CREATION OF THE FULLGRAPHGROUP
+    //
+    this.fullGraphGroup.setHeight(this.graphGroupe.getHeight());
+    this.fullGraphGroup.setWidth(this.config.diffX(this.config.max));
+    this.fullGraphGroup.setX(0);
+    this.fullGraphGroup.setDraggable(true);
+    this.fullGraphGroup.setDragBoundFunc(function(pos) {
+        var newX;
+
+        var elmX=pos.x-self.graphGroupe.getX();
+        
+        
+        if(elmX>0 || elmX<(-1)*this.getWidth()+self.graphGroupe.getWidth())
+            newX = this.getAbsolutePosition().x;
+        else
+            newX=pos.x;
+        
+        self.refreshLabelPos();
+        
+        return {
+          x: newX,
+          y: this.getAbsolutePosition().y
+        };
+    });
+    this.graphGroupe.add(this.fullGraphGroup);
+    
+    // ADD A RECT IN THE BACKGROUND. THIS RECT WILL ALLOW TO CATCH THE GROUP FOR DRAGGING (cant drag a group on empty area)
+    //
+    var dragingRect=new Kinetic.Rect({
+        fill: this.bgColor,
+        x:0,
+        y:0,
+        height: this.fullGraphGroup.getHeight(),
+        width: this.config.diffX(this.config.max)
+    });
+    this.fullGraphGroup.add(dragingRect);
+    // CREATION OF THE DATE
+    //
+    this.dateGroup.setHeight(40);
+    this.dateGroup.setY(this.fullGraphGroup.getHeight()-this.dateGroup.getHeight());
+    this.fullGraphGroup.add(this.dateGroup);
+    // CREATION OF THE GRID
+    //
+    this.fullGraphGroup.add(this.gridGroup);
+    // CREATION OF THE LINES
+    //
+    this.fullGraphGroup.add(this.lineGroup);
+    
+    
+    /*******************************************
+     = CREATE LINE TO SHOW LIMITS OF THE GRAPH *
+     ==========================================*/
+    var leftLine = new Kinetic.Line({
+        points: [this.labelGroup.getWidth(), 0, this.labelGroup.getWidth(), this.fullGraphGroup.getHeight()-this.dateGroup.getHeight()],
+        stroke: "#BBB",
+        strokeWidth: 1
+    });
+    
+    var rightLine = new Kinetic.Line({
+        points: [0, 0, 0, this.fullGraphGroup.getHeight()-this.dateGroup.getHeight()],
+        stroke: "#BBB",
+        strokeWidth: 1
+    });
+
+    
+    /***************************
+     = ADD GROUPS TO THE LAYER *
+     ==========================*/
+    
+    this.graphLayer.add(this.graphGroupe);// WE CREATE IT BEFORE BECAUSE LEFT AND RIGHT PAN HIDE OVERFLOW
+    this.graphLayer.add(this.positionGroupe);
+    this.graphLayer.add(this.labelGroup);
+    
+    this.labelGroup.add(leftLine);
+    this.positionGroupe.add(rightLine);
+    this.labelGroup.add(this.labelsContainer);
+    
+    
     
     
     /************************
@@ -103,8 +232,9 @@ KhronosJs.timegraph = function( params ){
 //    this.timelineLayer.setX(50);
 //    this.add(this.timelineLayer);
 
-
     this.add(this.graphLayer);
+    
+    console.log(this.fullGraphGroup.getWidth());
     
 };
 
@@ -117,21 +247,53 @@ KhronosJs.timegraph.prototype = {
         this.timelines.push(timeline);
         this.lineGroup.add(timeline.getGroup());
         
-
-        this.refresh();
-        
-        
-        
+        this.refreshTimeline(timeline);
+        this.draw();
     },
     
     refresh: function(){
+
+        this.labelsContainer.removeChildren();
+
         for( var k in this.timelines){
             
-            this.timelines[k].draw(this.config);
+            this.refreshTimeline(this.timelines[k]);
             
         }
         
         this.draw();
+    },
+      
+    refreshLabelPos: function(){
+        
+        var date=this.config.diffXToDate(Math.abs(this.fullGraphGroup.getX()));
+        
+        for( var k in this.timelines ){
+            
+            this.timelines[k].refreshLabelPos(date,this.config);
+            
+        }
+
+    },
+    
+    refreshTimeline: function(timeline){
+            
+            
+            //******************
+            // REMAKE THE LINES
+            timeline.draw(this.config);
+            
+            //*************
+            // MAKE LEGEND
+            var legend=timeline.legend;
+            if(legend!==undefined){
+
+                label=timeline.getLabel();
+                this.labelsContainer.add(label);
+                this.labelsContainer.draw();
+            }
+            
+  
     }
     
 }

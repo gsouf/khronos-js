@@ -30,12 +30,85 @@ KhronosJs.timeline = function( params ){
     });
     
     
+     var label = new Kinetic.Label({
+        text: {
+          text: this.legend,
+          fontFamily: 'Arial',
+          fontSize: 10,
+          padding: 2,
+          fill: 'white'
+        },
+        rect: {
+          fill: this.color,
+          pointerDirection: 'right',
+          pointerWidth: 3,
+          pointerHeight: 5,
+        }
+    });
+    
+    this.label=label;
+    
 };
 
 KhronosJs.timeline.prototype={
     
     getGroup: function(){
         return this.group;
+    },
+    getLabel: function(){
+        return this.label;
+    },
+    
+    /**
+     * Refresh the postion of the label associated with the graph
+     * @param {type} date
+     * @param {type} config
+     * @returns {unresolved}
+     */
+    refreshLabelPos:function(date,config){
+        this.label.setX(20);
+        
+
+        
+        var before=this.points[0];
+        var after=before;
+        var last=this.points[this.points.length-1];
+        
+        if(date.getTime()<=before.date.getTime()){
+            this.label.setY(config.yVal(before.value));
+            return;
+        }
+        
+        if(date.getTime()>=last.date.getTime()){
+            this.label.setY(config.yVal(last.value));
+            return;
+        }
+
+        
+        var i=0; 
+
+        while(i<this.points.length &&  after.date<date){
+            
+            if(this.points[i].date.getTime()<=date.getTime()){
+                before=this.points[i];
+                
+                if(this.points[i+1].date>date)
+                    after=this.points[i+1];
+                    
+            }
+            i++;
+        }
+        
+        // y=ax+b
+        var x2= config.diffX(after.date,false)-config.diffX(before.date,false);
+        
+
+        var y2= after.value-before.value;
+        var a = y2/x2;
+        
+        console.log(a);
+        this.label.setY( config.yVal(before.value) + config.yVal((config.diffX(date,false)-config.diffX(before.date,false))*a)  );
+
     },
     
     /**

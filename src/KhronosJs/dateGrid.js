@@ -14,8 +14,8 @@ KhronosJs.dateGrid.prototype = {
         
         var intervals = this.config.diffX(this.config.max,false);
         
-        var maxY=this.config.maxY*this.config.ppuY;
-        var minY=this.config.minY*this.config.ppuY;
+        var maxY=this.config.yVal(this.config.maxY);
+        var minY=0;
         
         for(var i=0;i<intervals+1;i++){
             
@@ -35,7 +35,7 @@ KhronosJs.dateGrid.prototype = {
         
         for(var i=this.config.minY;i<this.config.maxY+1;i++){
             
-            var yVal=i*this.config.ppuY;
+            var yVal=this.config.yVal(i);
             
             var line = new Kinetic.Line({
                 points: [ 0 , yVal , maxX , yVal ],
@@ -46,6 +46,8 @@ KhronosJs.dateGrid.prototype = {
             this.add(line);
             
         }
+        
+        
         
     }
 };
