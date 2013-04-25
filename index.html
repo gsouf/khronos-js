@@ -23,8 +23,14 @@
         <script language="JavaScript" 
             src="./src/KhronosJs/timeline.js"></script> 
         
-            <script language="JavaScript" 
+        <script language="JavaScript" 
             src="./src/KhronosJs/dateGrid.js"></script> 
+        
+        <script language="JavaScript" 
+            src="./src/KhronosJs/datePannel.js"></script> 
+       
+        <script language="JavaScript" 
+            src="./src/KhronosJs/valuePannel.js"></script> 
             
           
             
@@ -38,11 +44,11 @@
             var conf=new KhronosJs.config({
                 unit: "1d",
                 min: new Date(2013,04,20),
-                max: new Date(2013,04,23),
-                minY: 1,
+                max: new Date(2013,05,30),
+                minY: 0,
                 maxY: 5,
                 ppuX: 30,
-                ppuY:20
+                ppuY:40
             });
             
             var graph=new KhronosJs.timegraph({
@@ -55,18 +61,21 @@
             
             
             var t=new KhronosJs.timeline({
-                
+                legend: "Rockagogo.com",
                 color: "#FF0000",
                 overColor: "#0000FF"
             });
             
             t.addPoint(new Date(2013,04,21),1);
-            t.addPoint(new Date(2013,04,20),1);
-            t.addPoint(new Date(2013,04,22),2);
-            t.addPoint(new Date(2013,04,23),2);
+
+            t.addPoint(new Date(2013,04,22),1);
+            t.addPoint(new Date(2013,04,23),1);
+            t.addPoint(new Date(2013,04,25),1);
+            t.addPoint(new Date(2013,04,26),1);
+            t.addPoint(new Date(2013,04,24),1);
             
             var t2=new KhronosJs.timeline({
-                
+                legend: "emp.com",
                 color: "#FF00FF",
                 overColor: "#0000FF"
             });
@@ -77,15 +86,15 @@
             t2.addPoint(new Date(2013,04,23),3);
             
             var t3=new KhronosJs.timeline({
-                
+                legend: "goeland.com",
                 color: "#00FFFF",
                 overColor: "#0000FF"
             });
             
             t3.addPoint(new Date(2013,04,21),3);
-            t3.addPoint(new Date(2013,04,20),3);
-            t3.addPoint(new Date(2013,04,22),1);
-            t3.addPoint(new Date(2013,04,23),1);
+            t3.addPoint(new Date(2013,04,24),2);
+            t3.addPoint(new Date(2013,04,22),2);
+            t3.addPoint(new Date(2013,04,23),2);
 
             graph.addTimeline(t);
             graph.addTimeline(t2);

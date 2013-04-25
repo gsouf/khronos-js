@@ -50,6 +50,7 @@ KhronosJs.timegraph = function( params ){
      =========================*/
         this.labelGroup    = new Kinetic.Group();
             this.labelsContainer = new Kinetic.Group();
+                this.valuesGroup = new KhronosJs.valuePannel(this.config);
         this.positionGroupe = new Kinetic.Group();
         this.graphGroupe    = new Kinetic.Group();
             this.fullGraphGroup = new Kinetic.Group();
@@ -140,6 +141,8 @@ KhronosJs.timegraph = function( params ){
     this.fullGraphGroup.setHeight(this.graphGroupe.getHeight());
     this.fullGraphGroup.setWidth(this.config.diffX(this.config.max));
     this.fullGraphGroup.setX(0);
+    //*************************
+    // SET DRAG EVENT FOR GRAPH
     this.fullGraphGroup.setDraggable(true);
     this.fullGraphGroup.setDragBoundFunc(function(pos) {
         var newX;
@@ -147,7 +150,7 @@ KhronosJs.timegraph = function( params ){
         var elmX=pos.x-self.graphGroupe.getX();
         
         
-        if(elmX>0 || elmX<(-1)*this.getWidth()+self.graphGroupe.getWidth())
+        if(elmX>10 || elmX<(-1)*this.getWidth()+self.graphGroupe.getWidth())
             newX = this.getAbsolutePosition().x;
         else
             newX=pos.x;
@@ -198,17 +201,24 @@ KhronosJs.timegraph = function( params ){
         stroke: "#BBB",
         strokeWidth: 1
     });
-
+    
+    
+    /*************************
+     = CREATE VALUES GROUP *
+     ========================*/
+    this.valuesGroup.setX(this.labelGroup.getWidth()-12);
     
     /***************************
      = ADD GROUPS TO THE LAYER *
      ==========================*/
+    
     
     this.graphLayer.add(this.graphGroupe);// WE CREATE IT BEFORE BECAUSE LEFT AND RIGHT PAN HIDE OVERFLOW
     this.graphLayer.add(this.positionGroupe);
     this.graphLayer.add(this.labelGroup);
     
     this.labelGroup.add(leftLine);
+    this.labelGroup.add(this.valuesGroup);
     this.positionGroupe.add(rightLine);
     this.labelGroup.add(this.labelsContainer);
     
@@ -240,6 +250,10 @@ KhronosJs.timegraph = function( params ){
 
 
 
+
+/*************
+ = PROTOTYPE *
+ ============*/
 
 KhronosJs.timegraph.prototype = {
     
@@ -289,8 +303,10 @@ KhronosJs.timegraph.prototype = {
             if(legend!==undefined){
 
                 label=timeline.getLabel();
+                label.setX(this.labelGroup.getWidth()-20);
                 this.labelsContainer.add(label);
                 this.labelsContainer.draw();
+                timeline.refreshLabelPos(this.config.min,this.config);
             }
             
   

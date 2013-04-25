@@ -66,8 +66,6 @@ KhronosJs.timeline.prototype={
      * @returns {unresolved}
      */
     refreshLabelPos:function(date,config){
-        this.label.setX(20);
-        
 
         
         var before=this.points[0];
@@ -106,7 +104,6 @@ KhronosJs.timeline.prototype={
         var y2= after.value-before.value;
         var a = y2/x2;
         
-        console.log(a);
         this.label.setY( config.yVal(before.value) + config.yVal((config.diffX(date,false)-config.diffX(before.date,false))*a)  );
 
     },
