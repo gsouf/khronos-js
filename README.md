@@ -1,7 +1,7 @@
 khronos-js
 ==========
 
-KhronosJs is a JS Library specialized for drawing temporal charts.
+KhronosJs is a JS Library specialized in drawing temporal charts.
 
 Be aware that it has been built under specific requirements and currently it mays no support all of your needing.
 
