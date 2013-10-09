@@ -1,3 +1,9 @@
+/**
+ * Copyright (c) 2013 Soufiane Ghzal
+ * Code under MIT LICENSE
+ * https://github.com/SneakyBobito/khronos-js
+ */
+
 KhronosJs.dateGrid = function(config, params ){
     
     if(params === undefined)

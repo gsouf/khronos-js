@@ -1,4 +1,10 @@
 /**
+ * Copyright (c) 2013 Soufiane Ghzal
+ * Code under MIT LICENSE
+ * https://github.com/SneakyBobito/khronos-js
+ */
+
+/**
  * 
  * @param {type} params 
  *  - color : hexa color e.g #000000

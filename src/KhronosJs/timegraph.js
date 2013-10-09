@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) 2013 Soufiane Ghzal
+ * Code under MIT LICENSE
+ * https://github.com/SneakyBobito/khronos-js
+ */
 KhronosJs.timegraph = function( params ){
     
     Kinetic.Stage.apply(this,[params]);
