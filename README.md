@@ -5,6 +5,8 @@ KhronosJs is a JS Library specialized in drawing temporal charts.
 
 Be aware that it has been built under specific requirements and currently it mays no support all of your needing.
 
+The file ``index.hmtl`` is ready for a demo, just download the repo and open index.html with your browser.
+
 
 Installation
 ------------
