@@ -62,7 +62,6 @@ Then you have to create a graph and a container for the graph (remember to creat
 ````html
 
     <div id="timeline" ></div>
-
 ````
 
 ````javascript
@@ -151,3 +150,13 @@ Right now we have a graph with one line, but we can add some other timelines :
     graph.addTimeline(t3);
 
 ````
+
+
+Roadmap
+-------
+* Steps for the y axis / more configurations (colors...)
+* fixing the top missing padding
+* replace graph.addTimeline() with graph.addItem() in order to make it more extendable
+* allow to show/unshow the grid
+* add some cool examples
+* make the time (X axis) legends more customable and more relevant
