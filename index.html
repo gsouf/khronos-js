@@ -2,17 +2,20 @@
 <html>
 
     <head>
+
+        <script language="JavaScript"
+                src="./src/kineticjs.js"></script>
+
+
         <title>Khronos Tester</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     
-        <script language="JavaScript" 
-            src="./src/kineticjs.js"></script>    
-        
+
         <script language="JavaScript" 
             src="./src/KhronosJs/Khronos.js"></script>    
         
         <script language="JavaScript" 
-            src="./src/KhronosJs/config.js"></script>  
+            src="./src/KhronosJs/config.js"></script>
             
         <script language="JavaScript" 
             src="./src/KhronosJs/timegraph.js"></script> 
@@ -30,10 +33,9 @@
             src="./src/KhronosJs/datePannel.js"></script> 
        
         <script language="JavaScript" 
-            src="./src/KhronosJs/valuePannel.js"></script> 
-            
-          
-            
+            src="./src/KhronosJs/valuePannel.js"></script>
+
+
     </head>
     
     <body>
@@ -62,9 +64,9 @@
             
             
             var t=new KhronosJs.timeline({
-                legend: "Rockagogo.com",
+                legend: "test1",
                 color: "#FF0000",
-                overColor: "#0000FF"
+                hoverColor: false
             });
             
             t.addPoint(new Date(2013,04,21),1);
@@ -76,9 +78,9 @@
             t.addPoint(new Date(2013,04,24),1);
             
             var t2=new KhronosJs.timeline({
-                legend: "emp.com",
+                legend: "test2",
                 color: "#FF00FF",
-                overColor: "#0000FF"
+                hoverColor: false
             });
             
             t2.addPoint(new Date(2013,04,21),2);
@@ -87,9 +89,9 @@
             t2.addPoint(new Date(2013,04,23),3);
             
             var t3=new KhronosJs.timeline({
-                legend: "goeland.com",
+                legend: "test3",
                 color: "#00FFFF",
-                overColor: "#0000FF"
+                hoverColor: false
             });
             
             t3.addPoint(new Date(2013,04,21),3);

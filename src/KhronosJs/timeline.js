@@ -2,7 +2,7 @@
  * 
  * @param {type} params 
  *  - color : hexa color e.g #000000
- *  - overColor : hexa color e.g #ffffff
+ *  - hoverColor : hexa color e.g #ffffff
  * @returns {undefined}
  */
 KhronosJs.timeline = function( params ){
@@ -11,8 +11,8 @@ KhronosJs.timeline = function( params ){
     
     this.legend = params.legend;
     
-    this.color = params.color;
-    this.overColor = params.overColor;
+    this.color = params.color || "#AAA";
+    this.hoverColor = params.hoverColor || false;
     
     this.points = new Array();
     
@@ -21,13 +21,16 @@ KhronosJs.timeline = function( params ){
      = CREATION OF THE EVENTS *
      =========================*/
     var self=this;
-    this.group.on("mouseenter",function(){
-       self.recolor(self.overColor);
-    });
-    
-    this.group.on("mouseleave",function(){
-       self.recolor(self.color);
-    });
+
+    if(self.hoverColor != false){
+        this.group.on("mouseenter",function(){
+           self.recolor(self.hoverColor);
+        });
+
+        this.group.on("mouseleave",function(){
+           self.recolor(self.color);
+        });
+    }
     
     
      var label = new Kinetic.Label({
@@ -44,7 +47,7 @@ KhronosJs.timeline = function( params ){
           pointerDirection: 'right',
 
           pointerWidth: 3,
-          pointerHeight: 5,
+          pointerHeight: 5
         }
     });
     
