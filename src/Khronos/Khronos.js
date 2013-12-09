@@ -35,7 +35,16 @@ var Khronos={};
 Khronos.applyParams = function(instance,params,definition){
     params = params || {};
     for( var item in definition ){
-        instance[item] = params[item] || definition[item] ;
+        if(definition[item] && definition[item]["kCallback"] !== undefined )
+            instance[item] = definition[item]["kCallback"](params[item]) ;
+        else
+            instance[item] = params[item] || definition[item] ;
     }
 
+};
+
+Khronos.error = function(message , url){
+    var errorMessage = "Khronos Error : " + message ;
+    if( url !== undefined )
+        errorMessage += " More informations at : " + url;
 };

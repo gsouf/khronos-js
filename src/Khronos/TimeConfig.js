@@ -11,10 +11,14 @@
  */
 Khronos.TimeConfig = function(params){
     Khronos.applyParams(this,params,{
-        unit : "day",
+        unit : "1 day",
         ppuX : 20,
-        ppuY : 20
+        ppuY : 20,
+        minDate : {kCallback:function(value){ return moment(value);}},
+        maxDate : null
     });
+    
+    this.secondsUnit = this._parseUnit(this.unit);
 
 
 };
@@ -22,12 +26,52 @@ Khronos.TimeConfig = function(params){
 Khronos.TimeConfig.prototype={
 
     _parseUnit : function(unit){
-        var availableList = {
-            day : 3600 * 24
+        var availableTypes = {
+            day : 86400,
+            minute : 60
         };
+        
+        var items = unit.split(" ");
+        var factor = items[0];
+        var type = items[1];
+        
+        var intRegex = /^\d+$/;
+        
+        if( ! (type in availableTypes) ){
+            throw Khronos.error("unit '" + + "' is not a valid unit.");
+        }else if( ! intRegex.test(factor) ){
+            throw Khronos.error("unit '" + + "' is not an Integer.");
+        }else{
+            return parseInt(factor) * availableTypes[type];
+        }
 
-        console.log("Khronos Error : unit '" + + "' is not a valid unit. More informations at : TODO ");
 
-    }
+    },
+            
+    _getScaleMs : function(){
+        return this.secondsUnit * 1000;
+    },
+    
+    diffX : function(date){
+        date = moment(date);        
+        var diffMs = date.valueOf() - this.minDate.valueOf();
+        return diffMs / this._getScaleMs();
+    },
+    
+    diffXPixel : function(date){
+        return this.diffX(date) * this.ppuX;
+    },
+    
+    diffXToDate : function(diffX){
+        return moment( diffX*this._getScaleMs() + this.minDate.valueOf() );
+    },
+    
+    diffXPixelToDate : function(diffX){
+        return moment( (diffX/this.ppuX)*this._getScaleMs() + this.minDate.valueOf() );
+    },
+            
+    yVal: function(number){
+      return (number)*this.ppuY;  
+    },
 
 }

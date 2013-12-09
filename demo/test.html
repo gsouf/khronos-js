@@ -16,10 +16,30 @@
 <script src="../src/vendors/snap.svg-min.js"></script>
 <script src="../src/Khronos/Khronos.js"></script>
 <script src="../src/Khronos/SvgContainer.js"></script>
+<script src="../src/Khronos/TimeDrawable.js"></script>
+<script src="../src/Khronos/TimeConfig.js"></script>
+<script src="../src/Khronos/TimeGraph.js"></script>
+<script src="../src/Khronos/Point.js"></script>
 
 <script>
 
-    var a = new Khronos.SvgContainer("#bob");
+    var a = Snap("#bob");
+    
+    var conf = new Khronos.TimeConfig({
+        unit : "1 day",
+        ppuX : 10,
+        ppuY : 10,
+        minDate : "2013-01-01"
+    });
+
+    var graph = new Khronos.TimeGraph(conf);
+
+    graph.addPoint("2013-01-02",5);
+    graph.addPoint("2013-01-03",5);
+    graph.addPoint("2013-01-04",5);
+    graph.addPoint("2013-01-14",6);
+    
+    a.add(graph._snap);
 
 </script>
 
