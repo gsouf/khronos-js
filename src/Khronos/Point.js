@@ -11,17 +11,24 @@
  */
 Khronos.Point = function(config,date,yValue){
     // PARENT CONSTRUCTOR
-    Khronos.TimeDrawable.apply(this,[config]);
+    Khronos.TimeDrawable.apply(this,[config,"circle"]);
+
     this.date = date;
     this.yValue = yValue;
-    
-    
+
     this.r = 3;
     this.x = this.config.diffXPixel(this.date);
     this.y = this.config.yVal(this.yValue);
 
-    this._snap.circle(this.x , this.y  , this.r);
+    this.attr({
+        cx:this.x,
+        cy:this.y,
+        r :this.r,
+        fill: "#FF0000"
+    });
+
+
 };
 
-Khronos.Point.prototype=Object.create(Khronos.TimeDrawable.prototype);
+Khronos.Point.prototype = Object.create(Khronos.TimeDrawable.prototype);
 

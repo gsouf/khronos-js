@@ -13,7 +13,6 @@
 <script src="../src/vendors/jquery.js"></script>
 <script src="../src/vendors/moment.min.js"></script>
 <script src="../src/vendors/moment-range.js"></script>
-<script src="../src/vendors/snap.svg-min.js"></script>
 <script src="../src/Khronos/Khronos.js"></script>
 <script src="../src/Khronos/SvgContainer.js"></script>
 <script src="../src/Khronos/TimeDrawable.js"></script>
@@ -23,7 +22,7 @@
 
 <script>
 
-    var a = Snap("#bob");
+    var a = $("#bob");
     
     var conf = new Khronos.TimeConfig({
         unit : "1 day",
@@ -32,14 +31,18 @@
         minDate : "2013-01-01"
     });
 
+
+
     var graph = new Khronos.TimeGraph(conf);
 
     graph.addPoint("2013-01-02",5);
     graph.addPoint("2013-01-03",5);
     graph.addPoint("2013-01-04",5);
     graph.addPoint("2013-01-14",6);
-    
-    a.add(graph._snap);
+
+    graph.redraw();
+
+    a.append(graph._$element);
 
 </script>
 

@@ -22,11 +22,10 @@ Khronos.TimeGraph.prototype=Object.create(Khronos.TimeDrawable.prototype);
 Khronos.TimeGraph.prototype.addPoint = function(date,yValue){
     var p = new Khronos.Point(this.config,date,yValue);
     this.points.push(p);
-    this.redraw();
 };
 
 Khronos.TimeGraph.prototype.redraw = function(){
-    this._snap.clear();
+    this.clear();
     
     var sorter = function (point1, point2) {
         if (point1.date.valueOf() > point2.date.valueOf()) return 1;
@@ -36,19 +35,23 @@ Khronos.TimeGraph.prototype.redraw = function(){
     
     this.points.sort(sorter);
     
-    this._snap.add(this.points[0]._snap);
+    this.add(this.points[0]);
     
     for(var i=1;i<this.points.length;i++){
-        this._snap.add(this.points[i]._snap);
-        var line = this._snap.line(this.points[i-1].x , this.points[i-1].y , this.points[i].x , this.points[i].y );
+        this.add(this.points[i]);
+        var line = new Khronos.TimeDrawable(null,"line");
         line.attr({
-            strokeWidth: 2
+            x1:this.points[i-1].x,
+            y1:this.points[i-1].y,
+            x2:this.points[i].x,
+            y2:this.points[i].y
         });
+        this.add(line);
     }
     
-    this._snap.attr({
+    this.attr({
         fill: "#F00",
-        stroke: "#F00",
+        stroke: "#F00"
     });
     
 };
