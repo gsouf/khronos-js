@@ -22,7 +22,8 @@ test( "Test config diffX", function() {
         unit : "1 day",
         ppuX : 10,
         ppuY : 10,
-        minDate : moment("2013-01-01")
+        minDate : moment("2013-01-01"),
+        maxDate : moment("2013-01-10")
     });
     
     
@@ -34,6 +35,8 @@ test( "Test config diffX", function() {
     config.ppuX = 14;
     ok( config.diffX("2013-01-13") == 12 );
     ok( config.diffXPixel("2013-01-13") == (12 * 14) );
+    
+    ok( config.diffX() === 9);
     
 });
 

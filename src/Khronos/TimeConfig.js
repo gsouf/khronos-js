@@ -7,7 +7,8 @@
 
 /**
  * @class TimeConfig
- * Group of base informations for drawing temporal data
+ * Container for time configuration (unit,ppx,ppy,date range...) 
+ * it also offers handy methods to calculate some time values
  */
 Khronos.TimeConfig = function(params){
     Khronos.applyParams(this,params,{
@@ -15,7 +16,7 @@ Khronos.TimeConfig = function(params){
         ppuX : 20,
         ppuY : 20,
         minDate : {kCallback:function(value){ return moment(value);}},
-        maxDate : null
+        maxDate : {kCallback:function(value){ return moment(value);}}
     });
     
     this.secondsUnit = this._parseUnit(this.unit);
@@ -27,8 +28,9 @@ Khronos.TimeConfig.prototype={
 
     _parseUnit : function(unit){
         var availableTypes = {
-            day : 86400,
-            minute : 60
+               day : 86400,
+            minute : 60,
+            second : 1
         };
         
         var items = unit.split(" ");
@@ -53,7 +55,11 @@ Khronos.TimeConfig.prototype={
     },
     
     diffX : function(date){
-        date = moment(date);        
+        if( undefined === date){
+            date = this.maxDate
+        }else{
+            date = moment(date);    
+        }
         var diffMs = date.valueOf() - this.minDate.valueOf();
         return diffMs / this._getScaleMs();
     },
@@ -67,11 +73,11 @@ Khronos.TimeConfig.prototype={
     },
     
     diffXPixelToDate : function(diffX){
-        return moment( (diffX/this.ppuX)*this._getScaleMs() + this.minDate.valueOf() );
+        return moment( (diffX/this.ppuX) * this._getScaleMs() + this.minDate.valueOf() );
     },
             
     yVal: function(number){
-      return (number)*this.ppuY;  
-    },
+      return (number) * this.ppuY;  
+    }
 
-}
+};

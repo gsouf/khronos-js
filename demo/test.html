@@ -13,25 +13,31 @@
 <script src="../src/vendors/jquery.js"></script>
 <script src="../src/vendors/moment.min.js"></script>
 <script src="../src/vendors/moment-range.js"></script>
+
 <script src="../src/Khronos/Khronos.js"></script>
-<script src="../src/Khronos/SvgContainer.js"></script>
 <script src="../src/Khronos/TimeDrawable.js"></script>
+<script src="../src/Khronos/TimeContainer.js"></script>
 <script src="../src/Khronos/TimeConfig.js"></script>
 <script src="../src/Khronos/TimeGraph.js"></script>
+<script src="../src/Khronos/TimeGrid.js"></script>
 <script src="../src/Khronos/Point.js"></script>
 
 <script>
 
     var a = $("#bob");
     
+    
     var conf = new Khronos.TimeConfig({
         unit : "1 day",
         ppuX : 10,
         ppuY : 10,
-        minDate : "2013-01-01"
+        minDate : "2013-01-01",
+        maxDate : "2013-01-20"
     });
 
-
+    var container = new Khronos.TimeContainer(conf);
+    
+    
 
     var graph = new Khronos.TimeGraph(conf);
 
@@ -41,8 +47,15 @@
     graph.addPoint("2013-01-14",6);
 
     graph.redraw();
+    
+    container.add(graph);
+    
+    
+    var grid = new Khronos.TimeGrid(conf);
+    container.add(grid);
 
-    a.append(graph._$element);
+    a.append(container._$element);
+
 
 </script>
 

@@ -9,12 +9,10 @@
  * @class TimeContainer
  * Base container with unit in time
  */
-Khronos.TimeContainer = function(params){
-    Khronos.applyParams(this,params,{
-        config : {
-            instance : Khronos.TimeConfig
-        }
-    });
+Khronos.TimeContainer = function(config,options){
+    Khronos.TimeDrawable.apply(this,[config]);
 
 
 };
+
+Khronos.TimeContainer.prototype=Object.create(Khronos.TimeDrawable.prototype);
