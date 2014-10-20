@@ -38,7 +38,6 @@ Khronos.TimeGraph.prototype.redraw = function(){
     this.add(this.points[0]);
     
     for(var i=1;i<this.points.length;i++){
-        this.add(this.points[i]);
         var line = new Khronos.TimeDrawable(null,"line");
         line.attr({
             x1:this.points[i-1].x,
@@ -47,6 +46,7 @@ Khronos.TimeGraph.prototype.redraw = function(){
             y2:this.points[i].y
         });
         this.add(line);
+        this.add(this.points[i]);
     }
     
     this.attr({
