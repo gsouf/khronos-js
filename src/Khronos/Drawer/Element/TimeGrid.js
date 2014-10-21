@@ -9,41 +9,47 @@
  * @class TimeGrid
  * Grid drawed from a time config
  */
-Khronos.TimeGrid = function(config,options){
+Khronos.Drawer.Element.TimeGrid = function(config,options){
     
     Khronos.applyParams(this,options,{
-        xColor : "#DDDDDD",
-        yColor : "#888888"
+        color : "#DDDDDD",
         
     });
     
     // PARENT CONSTRUCTOR
     Khronos.TimeDrawable.apply(this,[config]);
+    
 
-    this.lines = new Array();
+};
+
+
+Khronos.Drawer.Element.TimeGrid.prototype=Object.create(Khronos.TimeDrawable.prototype);
+
+
+Khronos.Drawer.Element.TimeGrid.prototype.redraw = function(){
+    
+    this.clear();
     
     var ivals = this.config.diffX();
-    var height = this.config.yVal(20);
+    var ystart = this.config.yVal(this.config.maxY);
+    var yend = this.config.yVal(this.config.minY);
+        
+
     
-    
-    for(var i = 0 ; i < ivals ; i++){
+    for(var i = 0 ; i < ivals + 1 ; i++){
         
         var line = new Khronos.TimeDrawable(null,"line");
-        console.log(this.xColor);
         
         line.attr({
             x1:i*this.config.ppuX,
-            y1:0,
+            y1:ystart,
             x2:i*this.config.ppuX,
-            y2:height,
-            stroke : this.xColor
+            y2:yend,
+            stroke : this.color
         });
         
         this.add(line);
         
     }
-
+    
 };
-
-
-Khronos.TimeGrid.prototype=Object.create(Khronos.TimeDrawable.prototype);

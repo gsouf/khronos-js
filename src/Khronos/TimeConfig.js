@@ -16,7 +16,10 @@ Khronos.TimeConfig = function(params){
         ppuX : 20,
         ppuY : 20,
         minDate : {kCallback:function(value){ return moment(value);}},
-        maxDate : {kCallback:function(value){ return moment(value);}}
+        maxDate : {kCallback:function(value){ return moment(value);}},
+        minY    : 0,
+        maxY    : 10,
+        reverseYAxis : true
     });
     
     this.secondsUnit = this._parseUnit(this.unit);
@@ -78,7 +81,29 @@ Khronos.TimeConfig.prototype={
     },
             
     yVal: function(number){
-      return (number) * this.ppuY;  
+
+        if(undefined == number)
+            number = this.maxY;
+
+        var realValue = (number) * this.ppuY;
+        
+        var rescale   = this.minY * this.ppuY;
+        
+        var rescaleValue = realValue - rescale;
+        
+        if(this.reverseYAxis){
+            console.log(rescaleValue);
+            
+            return (this.maxY * this.ppuY) - rescaleValue;
+        }else{
+            return rescaleValue;
+        }
+
+        
+    },
+            
+    yIntervals : function(){
+        return Math.abs(this.minY - this.maxY);
     }
 
 };

@@ -9,7 +9,7 @@
  * @class TimeContainer
  * Scatterplot chart
  */
-Khronos.GraphDrawer.Line = function(config,options){
+Khronos.Drawer.Chart.Line = function(config,options){
     Khronos.TimeContainer.apply(this,[config]);
 
     Khronos.applyParams(this,options,{
@@ -20,9 +20,9 @@ Khronos.GraphDrawer.Line = function(config,options){
 
 };
 
-Khronos.GraphDrawer.Line.prototype=Object.create(Khronos.TimeContainer.prototype);
+Khronos.Drawer.Chart.Line.prototype=Object.create(Khronos.TimeContainer.prototype);
 
-Khronos.GraphDrawer.Line.prototype.redraw = function(data,dataPrecalc){
+Khronos.Drawer.Chart.Line.prototype.redraw = function(data,dataPrecalc){
     this.clear();
     
     for(var i=1;i<dataPrecalc.length;i++){

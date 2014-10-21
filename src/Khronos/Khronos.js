@@ -23,7 +23,9 @@
  */
 
 var Khronos         = {};
-Khronos.GraphDrawer = {};
+Khronos.Drawer      = {};
+Khronos.Drawer.Chart = {};
+Khronos.Drawer.Element = {};
 Khronos.Element     = {};
 
 

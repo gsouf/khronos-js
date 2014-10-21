@@ -19,10 +19,12 @@
 <script src="../src/Khronos/TimeContainer.js"></script>
 <script src="../src/Khronos/TimeConfig.js"></script>
 <script src="../src/Khronos/TimeGraph.js"></script>
-<script src="../src/Khronos/TimeGrid.js"></script>
+<script src="../src/Khronos/Drawer/Element/TimeGrid.js"></script>
+<script src="../src/Khronos/Drawer/Element/ValueGrid.js"></script>
 <script src="../src/Khronos/Element/Point.js"></script>
-<script src="../src/Khronos/GraphDrawer/Scatterplot.js"></script>
-<script src="../src/Khronos/GraphDrawer/Line.js"></script>
+<script src="../src/Khronos/Element/Square.js"></script>
+<script src="../src/Khronos/Drawer/Chart/Scatterplot.js"></script>
+<script src="../src/Khronos/Drawer/Chart/Line.js"></script>
 
 <script>
 
@@ -44,8 +46,10 @@
     var graph = new Khronos.TimeGraph(conf,{
         
         drawers : [
-            new Khronos.GraphDrawer.Scatterplot(conf),
-            new Khronos.GraphDrawer.Line(conf),
+            new Khronos.Drawer.Element.TimeGrid(conf,{color:"#EEEEEE"}),
+            new Khronos.Drawer.Element.ValueGrid(conf,{color:"#F4F4F4"}),
+            new Khronos.Drawer.Chart.Scatterplot(conf),
+            new Khronos.Drawer.Chart.Line(conf)
         ]
         
     });
@@ -53,16 +57,12 @@
     graph.addPoint("2013-01-02",5);
     graph.addPoint("2013-01-03",5);
     graph.addPoint("2013-01-04",5);
-    graph.addPoint("2013-01-14",6);
+    graph.addPoint("2013-01-14",7);
 
     graph.redraw();
     
     container.add(graph);
     
-    
-    var grid = new Khronos.TimeGrid(conf);
-    container.add(grid);
-
     a.append(container._$element);
 
 
