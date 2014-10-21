@@ -26,8 +26,10 @@
 <script src="../src/Khronos/Drawer/Element/ValueGrid.js"></script>
 <script src="../src/Khronos/Element/Point.js"></script>
 <script src="../src/Khronos/Element/Square.js"></script>
+<script src="../src/Khronos/Element/Polygon.js"></script>
 <script src="../src/Khronos/Drawer/Chart/Scatterplot.js"></script>
 <script src="../src/Khronos/Drawer/Chart/Line.js"></script>
+<script src="../src/Khronos/Drawer/Chart/Area.js"></script>
 
 <script>
 
@@ -51,6 +53,7 @@
         drawers : [
             new Khronos.Drawer.Element.TimeGrid(conf,{color:"#EEEEEE"}),
             new Khronos.Drawer.Element.ValueGrid(conf,{color:"#F4F4F4"}),
+            new Khronos.Drawer.Chart.Area(conf),
             new Khronos.Drawer.Chart.Scatterplot(conf),
             new Khronos.Drawer.Chart.Line(conf)
         ]
