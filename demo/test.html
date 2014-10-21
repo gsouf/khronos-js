@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Khronos Unit testing</title>
+</head>
+
+<body>
+
+<svg id="bob" style="width:20%;height:500px;"></svg>
+
+<script src="../src/vendors/jquery.js"></script>
+<script src="../src/vendors/moment.min.js"></script>
+<script src="../src/vendors/moment-range.js"></script>
+<script src="../Khronos.min.js"></script>
+
+
+<script>
+
+    var a = $("#bob");
+    
+    
+    var conf = new Khronos.TimeConfig({
+        unit : "1 day",
+        ppuX : 10,
+        ppuY : 10,
+        minDate : "2013-01-01",
+        maxDate : "2013-01-20"
+    });
+
+    var container = new Khronos.TimeContainer(conf);
+    
+    
+
+    var graph = new Khronos.TimeGraph(conf,{
+        
+        drawers : [
+            new Khronos.Drawer.Element.TimeGrid(conf,{color:"#EEEEEE"}),
+            new Khronos.Drawer.Element.ValueGrid(conf,{color:"#F4F4F4"}),
+            new Khronos.Drawer.Chart.Area(conf),
+            new Khronos.Drawer.Chart.Scatterplot(conf),
+            new Khronos.Drawer.Chart.Line(conf)
+        ]
+        
+    });
+
+    graph.addPoint("2013-01-02",5);
+    graph.addPoint("2013-01-03",5);
+    graph.addPoint("2013-01-04",5);
+    graph.addPoint("2013-01-14",7);
+
+    graph.redraw();
+    
+    container.add(graph);
+    
+    a.append(container._$element);
+
+
+</script>
+
+</body>
+
+</html>

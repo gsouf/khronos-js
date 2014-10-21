@@ -1,0 +1,26 @@
+{
+    "js":{
+       
+ 
+        "public-dir" : ".",
+        "files":[
+            "/src/Khronos/Khronos.js",
+            "/src/Khronos/Bindable.js",
+            "/src/Khronos/Exception.js",
+            "/src/Khronos/TimeDrawable.js",
+            "/src/Khronos/TimeContainer.js",
+            "/src/Khronos/Drawer.js",
+            "/src/Khronos/TimeConfig.js",
+            "/src/Khronos/TimeGraph.js",
+            "/src/Khronos/Drawer/Element/TimeGrid.js",
+            "/src/Khronos/Drawer/Element/ValueGrid.js",
+            "/src/Khronos/Element/Point.js",
+            "/src/Khronos/Element/Square.js",
+            "/src/Khronos/Element/Polygon.js",
+            "/src/Khronos/Drawer/Chart/Scatterplot.js",
+            "/src/Khronos/Drawer/Chart/Line.js",
+            "/src/Khronos/Drawer/Chart/Area.js"
+        ]
+    }
+
+}
