@@ -9,45 +9,65 @@
  * @class TimeGraph
  * Group of base informations for drawing temporal data
  */
-Khronos.TimeGraph = function(config){
+Khronos.TimeGraph = function(config,options){
     // PARENT CONSTRUCTOR
     Khronos.TimeDrawable.apply(this,[config]);
 
-    this.points = new Array();
+    Khronos.applyParams(this,options,{
+        points : [],
+        drawers : []
+    });
 
 };
 
 Khronos.TimeGraph.prototype=Object.create(Khronos.TimeDrawable.prototype);
 
 Khronos.TimeGraph.prototype.addPoint = function(date,yValue){
-    var p = new Khronos.Point(this.config,date,yValue);
-    this.points.push(p);
+    this.points.push([date,yValue]);
 };
 
 Khronos.TimeGraph.prototype.redraw = function(){
     this.clear();
     
+    
+    ////////////////
+    // SORT BY DATE
+    
     var sorter = function (point1, point2) {
-        if (point1.date.valueOf() > point2.date.valueOf()) return 1;
-        if (point1.date.valueOf() < point2.date.valueOf()) return -1;
+        if (point1.valueOf() > point2.valueOf()) return 1;
+        if (point1.valueOf() < point2.valueOf()) return -1;
         return 0;
     };
     
     this.points.sort(sorter);
     
-    this.add(this.points[0]);
     
-    for(var i=1;i<this.points.length;i++){
-        var line = new Khronos.TimeDrawable(null,"line");
-        line.attr({
-            x1:this.points[i-1].x,
-            y1:this.points[i-1].y,
-            x2:this.points[i].x,
-            y2:this.points[i].y
-        });
-        this.add(line);
-        this.add(this.points[i]);
+    ///////////////////////////
+    // PRE CALCULATE X/YVALUES
+    
+    var precalc = [];
+    
+    for( var i = 0; i < this.points.length; i++ ){
+        
+        precalc.push([
+            this.config.diffXPixel(this.points[i][0]),
+            this.config.yVal(this.points[i][1])
+        ]);
+        
     }
+    
+    
+    //////////////////////
+    // REDRAW EACH DRAWER
+    
+    for( var i = 0; i < this.drawers.length; i++ ){
+        this.drawers[i].redraw(this.points,precalc);
+        this.add(this.drawers[i]);
+    }
+    
+    
+    /////////////////////
+    // APPLY BASE STYLES
     
     this.attr({
         fill: "#F00",

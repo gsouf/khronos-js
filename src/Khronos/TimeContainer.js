@@ -9,7 +9,7 @@
  * @class TimeContainer
  * Base container with unit in time
  */
-Khronos.TimeContainer = function(config,options){
+Khronos.TimeContainer = function(config){
     Khronos.TimeDrawable.apply(this,[config]);
 
 

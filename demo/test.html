@@ -20,7 +20,9 @@
 <script src="../src/Khronos/TimeConfig.js"></script>
 <script src="../src/Khronos/TimeGraph.js"></script>
 <script src="../src/Khronos/TimeGrid.js"></script>
-<script src="../src/Khronos/Point.js"></script>
+<script src="../src/Khronos/Element/Point.js"></script>
+<script src="../src/Khronos/GraphDrawer/Scatterplot.js"></script>
+<script src="../src/Khronos/GraphDrawer/Line.js"></script>
 
 <script>
 
@@ -39,7 +41,14 @@
     
     
 
-    var graph = new Khronos.TimeGraph(conf);
+    var graph = new Khronos.TimeGraph(conf,{
+        
+        drawers : [
+            new Khronos.GraphDrawer.Scatterplot(conf),
+            new Khronos.GraphDrawer.Line(conf),
+        ]
+        
+    });
 
     graph.addPoint("2013-01-02",5);
     graph.addPoint("2013-01-03",5);

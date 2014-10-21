@@ -9,26 +9,26 @@
  * @class Point
  * Group of base informations for drawing temporal data
  */
-Khronos.Point = function(config,date,yValue){
+Khronos.Element.Point = function(config,options){
     // PARENT CONSTRUCTOR
     Khronos.TimeDrawable.apply(this,[config,"circle"]);
 
-    this.date = date;
-    this.yValue = yValue;
-
-    this.r = 3;
-    this.x = this.config.diffXPixel(this.date);
-    this.y = this.config.yVal(this.yValue);
+    Khronos.applyParams(this,options,{
+        x : 1,
+        y : 1,
+        radius : 3,
+        fill   : "#FF0000"
+    });
 
     this.attr({
         cx:this.x,
         cy:this.y,
-        r :this.r,
+        r :this.radius,
         fill: "#FF0000"
     });
 
 
 };
 
-Khronos.Point.prototype = Object.create(Khronos.TimeDrawable.prototype);
+Khronos.Element.Point.prototype = Object.create(Khronos.TimeDrawable.prototype);
 

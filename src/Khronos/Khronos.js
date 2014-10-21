@@ -22,7 +22,9 @@
  * THE SOFTWARE.
  */
 
-var Khronos={};
+var Khronos         = {};
+Khronos.GraphDrawer = {};
+Khronos.Element     = {};
 
 
 /**
