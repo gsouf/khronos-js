@@ -11,22 +11,21 @@
  */
 Khronos.Drawer.Element.ValueGrid = function(config,options){
     
+    // PARENT CONSTRUCTOR
+    Khronos.Drawer.apply(this,[config]);
+    
     Khronos.applyParams(this,options,{
         color : "#DDDDDD",
         
     });
-    
-    // PARENT CONSTRUCTOR
-    Khronos.TimeDrawable.apply(this,[config]);
-    
 
 };
 
 
-Khronos.Drawer.Element.ValueGrid.prototype=Object.create(Khronos.TimeDrawable.prototype);
+Khronos.Drawer.Element.ValueGrid.prototype=Object.create(Khronos.Drawer.prototype);
 
 
-Khronos.Drawer.Element.ValueGrid.prototype.redraw = function(){
+Khronos.Drawer.Element.ValueGrid.prototype.__draw = function(){
     
     this.clear();
     

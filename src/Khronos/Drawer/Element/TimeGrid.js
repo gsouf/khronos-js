@@ -11,22 +11,22 @@
  */
 Khronos.Drawer.Element.TimeGrid = function(config,options){
     
+    // PARENT CONSTRUCTOR
+    Khronos.Drawer.apply(this,[config]);
+    
+    
     Khronos.applyParams(this,options,{
         color : "#DDDDDD",
         
     });
-    
-    // PARENT CONSTRUCTOR
-    Khronos.TimeDrawable.apply(this,[config]);
-    
 
 };
 
 
-Khronos.Drawer.Element.TimeGrid.prototype=Object.create(Khronos.TimeDrawable.prototype);
+Khronos.Drawer.Element.TimeGrid.prototype=Object.create(Khronos.Drawer.prototype);
 
 
-Khronos.Drawer.Element.TimeGrid.prototype.redraw = function(){
+Khronos.Drawer.Element.TimeGrid.prototype.__draw = function(){
     
     this.clear();
     

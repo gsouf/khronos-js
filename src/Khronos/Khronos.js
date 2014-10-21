@@ -24,8 +24,8 @@
 
 var Khronos         = {};
 Khronos.Drawer      = {};
-Khronos.Drawer.Chart = {};
-Khronos.Drawer.Element = {};
+//Khronos.Drawer.Chart = {};  // see Drawer.js
+//Khronos.Drawer.Element = {};// see Drawer.js
 Khronos.Element     = {};
 
 

@@ -6,11 +6,11 @@
 
 
 /**
- * @class TimeContainer
+ * @class Scatterplot
  * Scatterplot chart
  */
 Khronos.Drawer.Chart.Scatterplot = function(config,options){
-    Khronos.TimeContainer.apply(this,[config]);
+    Khronos.Drawer.apply(this,[config]);
 
     Khronos.applyParams(this,options,{
         color : "#DDDDDD",
@@ -19,9 +19,9 @@ Khronos.Drawer.Chart.Scatterplot = function(config,options){
 
 };
 
-Khronos.Drawer.Chart.Scatterplot.prototype=Object.create(Khronos.TimeContainer.prototype);
+Khronos.Drawer.Chart.Scatterplot.prototype=Object.create(Khronos.Drawer.prototype);
 
-Khronos.Drawer.Chart.Scatterplot.prototype.redraw = function(data,dataPrecalc){
+Khronos.Drawer.Chart.Scatterplot.prototype.__draw = function(data,dataPrecalc){
     this.clear();
     
     for(var i=0;i<dataPrecalc.length;i++){
