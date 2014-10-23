@@ -25,17 +25,19 @@ Khronos.Drawer.Chart.Line.prototype=Object.create(Khronos.Drawer.prototype);
 Khronos.Drawer.Chart.Line.prototype.__draw = function(data,dataPrecalc){
     this.clear();
     
-    for(var i=1;i<dataPrecalc.length;i++){
+    var polylinePoints = [];
+    
+    
+    for(var i=0;i<dataPrecalc.length;i++){
         
-  
-        var line = new Khronos.TimeDrawable(null,"line");
-        line.attr({
-            x1:dataPrecalc[i-1][0],
-            y1:dataPrecalc[i-1][1],
-            x2:dataPrecalc[i][0],
-            y2:dataPrecalc[i][1]
-        });
-        this.add(line);
+        polylinePoints.push(dataPrecalc[i]);
+
     }
+    
+    var polyline = new Khronos.Element.Polyline(this.config,{
+        points  : polylinePoints
+    });
+    
+    this.add(polyline);
     
 };

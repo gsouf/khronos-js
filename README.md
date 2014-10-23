@@ -8,15 +8,21 @@ Be aware that it has been built under specific requirements and currently it may
 The file ``index.hmtl`` is ready for a demo, just download the repo and open index.html with your browser.
 
 
+Be Aware
+========
+
+THE LIBRARY IS UNDER REFACTORING. THE DOCUMENTATION IS NOT UP TO DATE.
+
 Installation
 ------------
 
-KhronosJs is built on the top of [KineticJS](https://github.com/ericdrowell/KineticJS/). Then you will need KineticJS in addtion of KhronosJs.
-You can download the latest release or use the one shipped with KhronosJs.
+KhronosJs is built on the top of jQuery and momentJS. Then you will need these libraries in addtion of KhronosJs.
 
 ````html
         <script type="text/javascript"
-                src="kineticjs.js"></script>
+                src="jquery.js"></script>
+        <script type="text/javascript"
+                src="moment.js"></script>
         <script type="text/javascript"
                 src="khronos.min.js"></script>
 ````
