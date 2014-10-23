@@ -27,5 +27,9 @@ Khronos.TimeDrawable.prototype={
 
     attr : function(attr){
         this._$element.attr(attr);
+    },
+            
+    css : function(p){
+        this._$element.css(p);
     }
 };
