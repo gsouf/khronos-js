@@ -12,51 +12,23 @@
  */
 Khronos.TimeConfig = function(params){
     Khronos.applyParams(this,params,{
-        unit : "1 day",
-        ppuX : 20,
-        ppuY : 20,
+        
         minDate : {kCallback:function(value){ return moment(value);}},
         maxDate : {kCallback:function(value){ return moment(value);}},
         minY    : 0,
         maxY    : 10,
-        reverseYAxis : true
+        reverseYAxis : true,
+
+        viewportX : null,
+        viewportY : null
     });
-    
-    this.secondsUnit = this._parseUnit(this.unit);
 
-
+    this.viewportX.init();
 };
 
 Khronos.TimeConfig.prototype={
-
-    _parseUnit : function(unit){
-        var availableTypes = {
-               day : 86400,
-              hour : 3600,
-            minute : 60,
-            second : 1
-        };
-        
-        var items = unit.split(" ");
-        var factor = items[0];
-        var type = items[1];
-        
-        var intRegex = /^\d+$/;
-        
-        if( ! (type in availableTypes) ){
-            throw Khronos.error("unit '" + + "' is not a valid unit.");
-        }else if( ! intRegex.test(factor) ){
-            throw Khronos.error("unit '" + + "' is not an Integer.");
-        }else{
-            return parseInt(factor) * availableTypes[type];
-        }
-
-
-    },
             
-    _getScaleMs : function(){
-        return this.secondsUnit * 1000;
-    },
+    
     
     diffX : function(date){
         if( undefined === date){
@@ -65,19 +37,19 @@ Khronos.TimeConfig.prototype={
             date = moment(date);    
         }
         var diffMs = date.valueOf() - this.minDate.valueOf();
-        return diffMs / this._getScaleMs();
+        return diffMs / this.viewportX._getScaleMs();
     },
     
     diffXPixel : function(date){
-        return this.diffX(date) * this.ppuX;
+        return this.diffX(date) * this.viewportX.getPpu();
     },
     
     diffXToDate : function(diffX){
-        return moment( diffX*this._getScaleMs() + this.minDate.valueOf() );
+        return moment( diffX*this.viewportX._getScaleMs() + this.minDate.valueOf() );
     },
     
     diffXPixelToDate : function(diffX){
-        return moment( (diffX/this.ppuX) * this._getScaleMs() + this.minDate.valueOf() );
+        return moment( (diffX/this.viewportX.getPpu()) * this.viewportX._getScaleMs() + this.minDate.valueOf() );
     },
             
     yVal: function(number){
@@ -85,16 +57,14 @@ Khronos.TimeConfig.prototype={
         if(undefined == number)
             number = this.maxY;
 
-        var realValue = (number) * this.ppuY;
+        var realValue = (number) * this.viewportY.ppu;
         
-        var rescale   = this.minY * this.ppuY;
-        
+        var rescale   = this.minY * this.viewportY.ppu;
+
         var rescaleValue = realValue - rescale;
         
         if(this.reverseYAxis){
-            console.log(rescaleValue);
-            
-            return (this.maxY * this.ppuY) - rescaleValue;
+            return (this.maxY * this.viewportY.ppu) - rescaleValue;
         }else{
             return rescaleValue;
         }

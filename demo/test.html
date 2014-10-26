@@ -31,6 +31,12 @@
 <script src="../src/Khronos/Drawer/Chart/Line.js"></script>
 <script src="../src/Khronos/Drawer/Chart/Area.js"></script>
 
+<script src="../src/Khronos/ViewportX.js"></script>
+<script src="../src/Khronos/ViewportX/DateRange.js"></script>
+
+<script src="../src/Khronos/ViewportY.js"></script>
+<script src="../src/Khronos/ViewportY/Range.js"></script>
+
 
 <script>
 
@@ -38,11 +44,19 @@
     
     
     var conf = new Khronos.TimeConfig({
-        unit : "1 day",
-        ppuX : 10,
-        ppuY : 10,
         minDate : "2013-01-01",
-        maxDate : "2013-01-20"
+        maxDate : "2013-01-20",
+        viewportX : new Khronos.ViewportX.DateRange({
+            from : "2013-01-01",
+            to   : "2013-01-20",
+            unit : "1 day",
+            ppu  : 10
+        }),
+        viewportY : new Khronos.ViewportY.Range({
+            from : 0,
+            to   : 10,
+            ppu  : 10
+        })
     });
 
     var container = new Khronos.TimeContainer(conf);

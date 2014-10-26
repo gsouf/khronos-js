@@ -41,9 +41,9 @@ Khronos.Drawer.Element.ValueGrid.prototype.__draw = function(){
         
         line.attr({
             x1: xstart,
-            y1: i*this.config.ppuY,
+            y1: i*this.config.viewportY.ppu,
             x2: xend,
-            y2: i*this.config.ppuY,
+            y2: i*this.config.viewportY.ppu,
             stroke : this.color
         });
         

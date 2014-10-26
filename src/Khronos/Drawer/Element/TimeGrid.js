@@ -41,9 +41,9 @@ Khronos.Drawer.Element.TimeGrid.prototype.__draw = function(){
         var line = new Khronos.TimeDrawable(null,"line");
         
         line.attr({
-            x1:i*this.config.ppuX,
+            x1:i*this.config.viewportX.ppu,
             y1:ystart,
-            x2:i*this.config.ppuX,
+            x2:i*this.config.viewportX.ppu,
             y2:yend,
             stroke : this.color
         });

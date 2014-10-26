@@ -55,7 +55,7 @@ Khronos.TimeGraph.prototype.redraw = function(){
         ]);
         
     }
-    
+
     
     //////////////////////
     // REDRAW EACH DRAWER
